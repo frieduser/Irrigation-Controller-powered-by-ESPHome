@@ -26,9 +26,9 @@ Other options:
 ## Screnshots
 Please see:
 *	Lovelace screenshots
-  -	Irrigation
-  -	Rain section (with some controls for testing)
-  -	Maintenance dashboard
+    -	Irrigation
+    -	Rain section (with some controls for testing)
+    -	Maintenance dashboard
 *	Notification examples
 *	Esphome code (I’ve used POE ESP32 platform)
   -	Rain gauge (reed switch to count every tip) has been used with 3.3V/12V Optocoupler – no need to debounce pulses
