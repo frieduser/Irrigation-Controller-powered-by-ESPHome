@@ -38,6 +38,6 @@ Happy to answer to your questions.
 
 ![alt text](screenshots/hass02.png "Screenshot Example")
 
-- View Example
-![alt text](screenshots/2024-03-12 16_20_08-Greenshot.png "Lovelace Example")
+Some screenshots:
+![screenshot1](screenshots/2024-03-12 16_20_08-Greenshot.png)
 
