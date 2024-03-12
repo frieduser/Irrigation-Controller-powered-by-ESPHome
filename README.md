@@ -1,6 +1,6 @@
 # Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
 
-## my needs
+## ovreview
 I’ve done a tailored irrigation system on my needs, leveraging on:
 *	Esphome sprinkler controller platform https://esphome.io/components/sprinkler.html
 *	Home Assistant Automation
@@ -8,8 +8,8 @@ I’ve done a tailored irrigation system on my needs, leveraging on:
 *	Single package file with all configurations (input_*, statistics and automation)
 I’ve a 4 zones lawn and two other zones: flowerbed and strawberries.
 
-## goals
-The goals I’ve pursued:
+## My needs
+What I needed is:
 *	Schedule with a time for a single irrigation in the day
 *	Frequency in days: every day, every two days and so on
 *	Disable a specific day, for example on Saturday if I know I’ll have a barbecue with friends; the irrigation will be done the following day
@@ -17,7 +17,7 @@ The goals I’ve pursued:
 
 ## Other features
 Other options:
-*	There’s a system to count rainfall in order to avoid watering (postponed) or decrement irrigation time
+*	There’s a system to count rainfall in order to avoid watering (postponed) or decrement irrigation time (in %, using multiplier_number in esphome)
 *	There’s a flag to enable a zone – or the lawn – to be rain aware for what available in previous point
 *	It’s possible to enable/disable scheduler
 *	The chance to watering manually
@@ -36,10 +36,27 @@ Please see:
 
 Happy to answer to your questions.
 
+Some screenshots are better than more words:
 ### Main Dashboard
 ![alt text](screenshots/main_dashboard.png "main dashboard")
 ### Rain Dashboard
 ![alt text](screenshots/rain_dashboard.png "rain dashboard")
+### Settings Dashboard
+please pay attention on "Lawn Auto Advance" binary switch used to watering all sprinklers under a controller 
+![alt text](screenshots/settings_dashboard.png "settings dashboard")
 ### Message Dashboard
 (not used at the moment)
 ![alt text](screenshots/messages_dashboard.png "message dashboard")
+### Persistent Notification
+Here you can find irrigation messages on delay, execution and future schedulings
+![alt text](screenshots/persistent_notification_example1.png "persistent_notification_example1")
+![alt text](screenshots/persistent_notification_example2.png "persistent_notification_example2")
+![alt text](screenshots/persistent_notification_example3.png "persistent_notification_example3")
+![alt text](screenshots/persistent_notification_example4.png "persistent_notification_example4")
+![alt text](screenshots/persistent_notification_example5.png "persistent_notification_example5")
+### Irrigation package:
+add Studio Code Server add-on for your convenience
+![alt text](screenshots/irrigation_package.png "irrigation_package")
+### ESPHome screnshot:
+Just to show a part of the code
+![alt text](screenshots/esphome_code.png "esphome_code")
