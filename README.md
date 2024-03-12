@@ -1,6 +1,10 @@
 # Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
 
 I’ve done a tailored irrigation system on my needs, leveraging on:
+12321
+
+14121
+
 •	Esphome sprinkler controller platform
 •	Home Assistant Automation
 •	Irrigation Dashboard with some HACS addons
