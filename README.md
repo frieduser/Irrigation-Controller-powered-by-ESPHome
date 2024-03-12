@@ -1,5 +1,6 @@
 # Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
 I learned a lot along the way and I thank all who gave me inspirations on solving issues; special thanks to @Alaric (who inspired me for the ESPCode), @ThaNerd (helped with lovelace interface)
+see https://community.home-assistant.io/t/irrigation-controller-powered-by-esphome/703074 for more clarifications
 
 ## Overview
 I’ve done a tailored irrigation system on my needs, leveraging on:
@@ -65,21 +66,26 @@ Happy to answer to your questions.
 Some screenshots are better than more words:
 ### Main Dashboard
 ![alt text](screenshots/main_dashboard.png "main dashboard")
+
 ### Rain Dashboard
 ![alt text](screenshots/rain_dashboard.png "rain dashboard")
+
 ### Settings Dashboard
 please pay attention on "Lawn Auto Advance" binary switch used to watering all sprinklers under a controller 
 ![alt text](screenshots/settings_dashboard.png "settings dashboard")
+
 ### Message Dashboard
 (not used at the moment)
 ![alt text](screenshots/messages_dashboard.png "message dashboard")
+ 
 ### Persistent Notification
 Here you can find irrigation messages on delay, execution and future schedulings
-![alt text](screenshots/persistent_notification_example1.png "persistent_notification_example1")
-![alt text](screenshots/persistent_notification_example2.png "persistent_notification_example2")
-![alt text](screenshots/persistent_notification_example3.png "persistent_notification_example3")
-![alt text](screenshots/persistent_notification_example4.png "persistent_notification_example4")
 ![alt text](screenshots/persistent_notification_example5.png "persistent_notification_example5")
+![alt text](screenshots/persistent_notification_example4.png "persistent_notification_example4")
+![alt text](screenshots/persistent_notification_example3.png "persistent_notification_example3")
+![alt text](screenshots/persistent_notification_example2.png "persistent_notification_example2")
+![alt text](screenshots/persistent_notification_example1.png "persistent_notification_example1")
+
 ### Irrigation package:
 add Studio Code Server add-on for your convenience
 ![alt text](screenshots/irrigation_package.png "irrigation_package")
