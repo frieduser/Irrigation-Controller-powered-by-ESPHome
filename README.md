@@ -1,52 +1,36 @@
-# Homeassistant Template Example By Nicolò Steffè
+# Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
 
-Home assistant Configuration (YAMLs)
+I’ve done a tailored irrigation system on my needs, leveraging on:
+•	Esphome sprinkler controller platform
+•	Home Assistant Automation
+•	Irrigation Dashboard with some HACS addons
+•	Single package file with all configurations (input_*, statistics and automation)
+I’ve a 4 zones lawn and two other zones: flowerbed and strawberries.
 
-This is my Home Assistant Configuration created with Raspberry Pi3 with Hassio.
+The goals I’ve pursued:
+•	Schedule with a time for a single irrigation in the day
+•	Frequency in days: every day, every two days and so on
+•	Disable a specific day, for example on Saturday if I know I’ll have a barbecue with friends; the irrigation will be done the following day
+•	For lawn, that has 4 zones, leveraging on Auto Advance option available in esphome/sprinkler, we can schedule just the lawn, not every single zone
 
-- Alexa voice command integrated with haaska https://github.com/mike-grant/haaska/wiki
-- Android Devices (iPads, iPods, iPhones)
-- Owntracks for presence detection and GPS logging
-![alt text](screenshots/hass02.png "Screenshot Example")
+Other options:
+•	There’s a system to count rainfall in order to avoid watering (postponed) or decrement irrigation time
+•	There’s a flag to enable a zone – or the lawn – to be rain aware for what available in previous point
+•	It’s possible to enable/disable scheduler
+•	The chance to watering manually
+•	Set up irrigation time in minutes with limits (60 min in my setup)
 
-- Mitsubishi Air Conditioner and Belkin IR Blaster - Mini R3
+Please see:
+•	Lovelace screenshots
+o	Irrigation
+o	Rain section (with some controls for testing)
+o	Maintenance dashboard
+•	Notification examples
+•	Esphome code (I’ve used POE ESP32 platform)
+o	Rain gauge (reed switch to count every tip) has been used with 3.3V/12V Optocoupler – no need to debounce pulses
+o	I’ve not used counter integration because I’ve preferred to leverage on home assistant statistics
+Happy to answer to your questions.
 
-.   ![alt text](screenshots/ir02.png "Player View")
-.   ![alt text](screenshots/ir01.png "Player View")
-
-- Sony Bravia Android TV and Chromecast TV 
-
-
-.   ![alt text](screenshots/player01.png "Media Player View")
-
-- Alexa Media Player
-![alt text](screenshots/alexa01.png "Alexa Media players")
-
-- Fritbox and Presence detection
-
-- Synology NAS
-- Reolink E1 Pro
-![alt text](screenshots/cam01.png "Camera View")
-
-- Shelly Devices
-
-![alt text](screenshots/shelly01.png "Lights View")
-![alt text](screenshots/shelly02.png "Lights View")
-
-- Yeelight RGB and White Bulb and Hass Scenes
-![alt text](screenshots/lights01.png "Lights View")
-
-- Efergy for Energy cost monitor
-![alt text](screenshots/energy01.png "Efergy Example")
-![alt text](screenshots/efergy01.png "Efergy Example")
-![alt text](screenshots/efergy02.png "Efergy Example")
-
-- Telegram Notification
-- FitBit Integration
-
-![alt text](screenshots/fitbit01.png "Fitbit Example")
-
-- Active Weather Map and International Space Station Integration
 ![alt text](screenshots/hass02.png "Screenshot Example")
 
 - View Example
