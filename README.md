@@ -36,5 +36,10 @@ Please see:
 
 Happy to answer to your questions.
 
-### Main Dasboard
+### Main Dashboard
 ![alt text](screenshots/main_dashboard.png "main dashboard")
+### Rain Dashboard
+![alt text](screenshots/rain_dashboard.png "rain dashboard")
+### Message Dashboard
+(not used at the moment)
+![alt text](screenshots/messages_dashboard.png "message dashboard")
