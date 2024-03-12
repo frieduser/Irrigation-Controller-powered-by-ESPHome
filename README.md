@@ -1,4 +1,4 @@
-# Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea (frieduser)
+# Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller Integration by Andrea (frieduser)
 I learned a lot along the way and I thank all who gave me inspirations on solving issues; special thanks to @Alaric (who inspired me for the ESPCode), @ThaNerd (helped with lovelace interface)
 
 see https://community.home-assistant.io/t/irrigation-controller-powered-by-esphome/703074 for more clarifications
