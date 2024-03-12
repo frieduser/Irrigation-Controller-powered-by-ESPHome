@@ -1,7 +1,0 @@
-- name: hassnico_bot
-  platform: telegram
-  api_key: !secret telegram_apikey
-  chat_id: !secret telegram_clientid
-
-- platform: alexa_media
-  name: alexa_media
