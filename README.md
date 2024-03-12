@@ -2,7 +2,7 @@
 
 ## my needs
 I’ve done a tailored irrigation system on my needs, leveraging on:
-*	Esphome sprinkler controller platform
+*	Esphome sprinkler controller platform https://esphome.io/components/sprinkler.html
 *	Home Assistant Automation
 *	Irrigation Dashboard with some HACS addons
 *	Single package file with all configurations (input_*, statistics and automation)
@@ -36,8 +36,5 @@ Please see:
 
 Happy to answer to your questions.
 
-![alt text](screenshots/hass02.png "Screenshot Example")
-
-Some screenshots:
-![screenshot1](/screenshots/2024-03-12 16_20_08-Greenshot.png)
-
+### Main Dasboard
+![alt text](screenshots/main_dashboard.png "main dashboard")
