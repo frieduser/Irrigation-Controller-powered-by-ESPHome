@@ -1,4 +1,5 @@
 # Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
+I learned a lot along the way and I thank all who gave me inspirations on solving issues; special thanks to @Alaric (who inspired me for the ESPCode), @ThaNerd (helped with lovelace interface)
 
 ## Overview
 I’ve done a tailored irrigation system on my needs, leveraging on:
@@ -30,6 +31,22 @@ I've used:
 * custom:slider-entity-row
 * custom:time-picker-card
 Please add-on them before enable dashboard
+
+## Components
+There are three software components of the irrigation systems:
+* irrigation dashboard
+* irrigation package
+  the heart of the package:
+  - automation are triggered on time, then it evaluates (conditions) weekday if it's enabled, in the actions parts:
+    - evaluates full rain day (match on number of tips to avoid irrigation) in order to set skipdays variable
+    - evaluates not enough rain (less than number of tips needed) to set progressive irrigation (in %)
+    - irrigates
+* irrigation esphome code
+The hardware components are:
+* esp32 board, mine is POE
+* rele board, powered at 12VDC
+* Optocoupler board, translate 12VDC pulses to 3.3VDC logic
+* Tipping Bucket Rainfall Sensor - powered at 12VCC because of long distance (>3m), so no false pulse are recorded
 
 ## Screnshots
 Please see:
@@ -70,3 +87,5 @@ add Studio Code Server add-on for your convenience
 ### ESPHome screnshot:
 Just to show a part of the code
 ![alt text](screenshots/esphome_code.png "esphome_code")
+
+Credit: 
