@@ -35,12 +35,11 @@ Please add-on them before enable dashboard
 ## Components
 There are three software components of the irrigation systems:
 * irrigation dashboard
-* irrigation package
-  the heart of the package:
+* irrigation package is the core:
   - automation are triggered on time, then it evaluates (conditions) weekday if it's enabled, in the actions parts:
     - evaluates full rain day (match on number of tips to avoid irrigation) in order to set skipdays variable
     - evaluates not enough rain (less than number of tips needed) to set progressive irrigation (in %)
-    - irrigates
+    - then irrigate, under certain conditions
 * irrigation esphome code
 The hardware components are:
 * esp32 board, mine is POE
