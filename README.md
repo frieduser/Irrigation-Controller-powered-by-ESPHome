@@ -31,13 +31,13 @@ Please see:
     -	Maintenance dashboard
 *	Notification examples
 *	Esphome code (I’ve used POE ESP32 platform)
-  -	Rain gauge (reed switch to count every tip) has been used with 3.3V/12V Optocoupler – no need to debounce pulses
-  -	I’ve not used counter integration because I’ve preferred to leverage on home assistant statistics
+    - Rain gauge (reed switch to count every tip) has been used with 3.3V/12V Optocoupler – no need to debounce pulses
+    - I’ve not used counter integration because I’ve preferred to leverage on home assistant statistics
 
 Happy to answer to your questions.
 
 ![alt text](screenshots/hass02.png "Screenshot Example")
 
 Some screenshots:
-![screenshot1](screenshots/2024-03-12 16_20_08-Greenshot.png)
+![screenshot1](/screenshots/2024-03-12 16_20_08-Greenshot.png)
 
