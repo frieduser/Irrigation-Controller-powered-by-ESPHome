@@ -1,6 +1,6 @@
 # Irrigation Controller powered by Home Assistant and ESPHome Sprinkler Controller integration By Andrea Guarnerio (frieduser)
 
-## ovreview
+## Overview
 I’ve done a tailored irrigation system on my needs, leveraging on:
 *	Esphome sprinkler controller platform https://esphome.io/components/sprinkler.html
 *	Home Assistant Automation
@@ -23,6 +23,14 @@ Other options:
 *	The chance to watering manually
 *	Set up irrigation time in minutes with limits (60 min in my setup)
 
+## HACS addons
+I've used:
+* custom:button-card
+* custom:numberbox-card
+* custom:slider-entity-row
+* custom:time-picker-card
+Please add-on them before enable dashboard
+
 ## Screnshots
 Please see:
 *	Lovelace screenshots
@@ -33,6 +41,8 @@ Please see:
 *	Esphome code (I’ve used POE ESP32 platform)
     - Rain gauge (reed switch to count every tip) has been used with 3.3V/12V Optocoupler – no need to debounce pulses
     - I’ve not used counter integration because I’ve preferred to leverage on home assistant statistics
+
+
 
 Happy to answer to your questions.
 
