@@ -38,5 +38,5 @@ Happy to answer to your questions.
 ![alt text](screenshots/hass02.png "Screenshot Example")
 
 - View Example
-![alt text](screenshots/hass01.png "Screenshot Example")
+![alt text](screenshots/2024-03-12 16_20_08-Greenshot.png "Lovelace Example")
 
