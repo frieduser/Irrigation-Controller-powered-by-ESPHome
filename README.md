@@ -3,7 +3,7 @@
 I’ve done a tailored irrigation system on my needs, leveraging on:
 12321
 
-14121
+14121qq
 
 •	Esphome sprinkler controller platform
 •	Home Assistant Automation
