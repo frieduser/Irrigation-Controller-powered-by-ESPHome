@@ -1,0 +1,1706 @@
+# made by frieduser on April 2024
+sensor:
+  - platform: average
+    unique_id: porch_avg_temp_today
+    name: "Outside Average Temperature_today"
+    entities:
+      - sensor.esp_porch_porch_temperature
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: average
+    unique_id: porch_avg_temp_yesterday
+    name: "Outside Average Temperature_yesterday"
+    entities:
+      - sensor.esp_porch_porch_temperature
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=1 ) }}"
+    duration:
+      hours: 24
+  - platform: average
+    unique_id: porch_avg_temp_2daysago
+    name: "Outside Average Temperature_2daysago"
+    entities:
+      - sensor.esp_porch_porch_temperature
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=2 ) }}"
+    duration:
+      hours: 24
+  - platform: average
+    unique_id: porch_avg_temp_3daysago
+    name: "Outside Average Temperature_3daysago"
+    entities:
+      - sensor.esp_porch_porch_temperature
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=3 ) }}"
+    duration:
+      hours: 24
+  - platform: average
+    unique_id: porch_avg_temp_4daysago
+    name: "Outside Average Temperature_4daysago"
+    entities:
+      - sensor.esp_porch_porch_temperature
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=4 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_24h
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    #start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_48-24h
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    end: "{{ now()-timedelta( days=1 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_72-48h
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    end: "{{ now()-timedelta( days=2 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_96-72h
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    end: "{{ now()-timedelta( days=3 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_today
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    start: "{{ now().replace(hour=0, minute=0, second=0) }}"
+    end: "{{ now() }}"
+  - platform: history_stats
+    name: Rain_stats_yesterday
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=1 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_2daysago
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=2 ) }}"
+    duration:
+      hours: 24
+  - platform: history_stats
+    name: Rain_stats_3daysago
+    entity_id: binary_sensor.raintick
+    state: "on"
+    type: count
+    start: "{{ now().replace(hour=0, minute=0, second=0)-timedelta( days=3 ) }}"
+    duration:
+      hours: 24
+  - platform: template
+    sensors:
+      rainfall_last24h:
+        friendly_name: Rainfall last 24h
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_24h'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_4824h_ago:
+        friendly_name: Rainfall 48h-24h ago
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_48_24h'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_7248h_ago:
+        friendly_name: Rainfall 72h-48h ago
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_72_48h'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_9672h_ago:
+        friendly_name: Rainfall 96h-72h ago
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_96_72h'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_today:
+        friendly_name: Rainfall today
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_today'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_yesterday:
+        friendly_name: Rainfall yesterday
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_yesterday'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_2daysago:
+        friendly_name: Rainfall 2 days ago
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_2daysago'),0) * float(states('input_number.raintick_mm')) ) }}
+  - platform: template
+    sensors:
+      rainfall_3daysago:
+        friendly_name: Rainfall 3 days ago
+        icon_template: mdi:weather-pouring
+        unit_of_measurement: mm
+        value_template: >-
+          {{ '%0.1f'| format(int(states('sensor.rain_stats_3daysago'),0) * float(states('input_number.raintick_mm')) ) }}
+
+input_boolean:
+  irrigation_debug:
+    name: irrigation debug flag
+    icon: mdi:debug-step-out
+    initial: false
+  flowers_skip_mon:
+    name: flowers skip Monday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_tue:
+    name: flowers skip Tuesday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_wed:
+    name: flowers skip Wednesday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_thu:
+    name: flowers skip Thursday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_fri:
+    name: flowers skip Friday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_sat:
+    name: flowers skip Saturday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_skip_sun:
+    name: flowers skip Sunday
+    icon: mdi:debug-step-over
+    initial: false
+  flowers_rain_aware:
+    name: flowers_rain_aware
+    icon: mdi:weather-rainy
+    initial: true
+  lawn_skip_mon:
+    name: lawn skip Monday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_tue:
+    name: lawn skip Tuesday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_wed:
+    name: lawn skip Wednesday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_thu:
+    name: lawn skip Thursday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_fri:
+    name: lawn skip Friday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_sat:
+    name: lawn skip Saturday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_skip_sun:
+    name: lawn skip Sunday
+    icon: mdi:debug-step-over
+    initial: false
+  lawn_rain_aware:
+    name: lawn_rain_aware
+    icon: mdi:weather-rainy
+    initial: true
+  strawberries_skip_mon:
+    name: strawberries skip Monday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_tue:
+    name: strawberries skip Tuesday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_wed:
+    name: strawberries skip Wednesday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_thu:
+    name: strawberries skip Thursday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_fri:
+    name: strawberries skip Friday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_sat:
+    name: strawberries skip Saturday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_skip_sun:
+    name: strawberries skip Sunday
+    icon: mdi:debug-step-over
+    initial: false
+  strawberries_rain_aware:
+    name: strawberries_rain_aware
+    icon: mdi:weather-rainy
+    initial: true
+
+input_datetime:
+  lawn_time_schedule:
+    name: lawn_time_schedule
+    has_date: false
+    has_time: true
+    icon: mdi:timeline-clock
+  flowers_time_schedule:
+    name: flowers_time_schedule
+    has_date: false
+    has_time: true
+    icon: mdi:timeline-clock
+  strawberries_time_schedule:
+    name: strawberries_time_schedule
+    has_date: false
+    has_time: true
+    icon: mdi:timeline-clock
+  lawn_last_irrigation:
+    name: lawn_last_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight
+  strawberries_last_irrigation:
+    name: strawberries_last_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight
+  flowers_last_irrigation:
+    name: flowers_last_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight
+  flowers_next_irrigation:
+    name: flowers_next_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight-outline
+  lawn_next_irrigation:
+    name: lawn_next_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight-outline
+  strawberries_next_irrigation:
+    name: strawberries_next_irrigation
+    has_date: true
+    has_time: true
+    icon: mdi:clock-time-eight-outline
+
+input_number:
+  lawn_frequency:
+    min: 1
+    max: 7
+    name: lawn_frequency
+    icon: mdi:sine-wave
+    mode: box
+    unit_of_measurement: days
+    step: 1
+  flowers_frequency:
+    min: 1
+    max: 7
+    name: flowers_frequency
+    icon: mdi:sine-wave
+    mode: box
+    unit_of_measurement: days
+    step: 1
+  strawberries_frequency:
+    min: 1
+    max: 7
+    name: strawberries_frequency
+    icon: mdi:sine-wave
+    mode: box
+    unit_of_measurement: days
+    step: 1
+  lawn_shifted:
+    min: 0
+    max: 50
+    name: lawn_shifted
+    unit_of_measurement: days
+    icon: mdi:arrow-right-bold
+    mode: box
+    step: 1
+  strawberries_shifted:
+    min: 0
+    max: 50
+    name: strawberries_shifted
+    icon: mdi:arrow-right-bold
+    mode: box
+    unit_of_measurement: days
+    step: 1
+  flowers_shifted:
+    min: 0
+    max: 50
+    name: flowers_shifted
+    icon: mdi:arrow-right-bold
+    mode: box
+    unit_of_measurement: days
+    step: 1
+  watering_avoid_rainticks:
+    min: 0
+    max: 99
+    name: watering avoided if rains
+    icon: mdi:water
+    mode: box
+    unit_of_measurement: ticks
+    step: 1
+    initial: 17 # 17*0.30303mm -> 5.15 mm -> 5 l/mq, enough for a lawn
+  raintick_mm:
+    min: 0.0
+    max: 0.5
+    name: mm of rain each tick
+    icon: mdi:wave-arrow-up
+    mode: box
+    unit_of_measurement: mm
+    step: 0.001
+    initial: 0.303
+  lawn_multiplier: # esphome number.lawn_irrigation_controller_multiplier is published back to homeassistant every 1 minute, so needed this internal variable
+    min: 0.01
+    max: 2.00
+    name: irrigation multiplier of lawn controller
+    icon: mdi:numeric-1-circle-outline
+    mode: box
+    unit_of_measurement: "multiplier"
+    step: 0.01
+    initial: 1.00
+  garden_multiplier: # esphome number.lawn_irrigation_controller_multiplier is published back to homeassistant every 1 minute, so needed this internal variable
+    min: 0.01
+    max: 2.00
+    name: irrigation multiplier of garden controller
+    icon: mdi:numeric-1-circle-outline
+    mode: box
+    unit_of_measurement: "multiplier"
+    step: 0.01
+    initial: 1.00
+
+input_text:
+  lawn_irrigation_messages:
+    name: lawn_irrigation_messages
+    icon: mdi:card-text-outline
+    max: 255
+    mode: text
+    min: 0
+  strawberries_irrigation_messages:
+    name: strawberries_irrigation_messages
+    icon: mdi:card-text-outline
+    max: 255
+    mode: text
+    min: 0
+  flowers_irrigation_messages:
+    max: 255
+    icon: mdi:card-text-outline
+    name: flowers_irrigation_messages
+    mode: text
+    min: 0
+
+automation:
+  - id: "1705770025551"
+    alias: irrigation_board_offline
+    description: "check if irrigation board is offline and then online"
+    mode: single
+    trigger:
+      - platform: state
+        entity_id:
+          - sensor.irrigation_espboard
+        to: unavailable
+        variables:
+          title: WARNING
+          text: Irrigation Esphome Board is offline
+      - platform: state
+        entity_id:
+          - sensor.irrigation_espboard
+        from: unavailable
+        variables:
+          title: NORMAL
+          text: Irrigation Esphome Board is back online
+    condition: []
+    action:
+      - service: notify.persistent_notification
+        data:
+          message: "{{ text }}"
+          title: "{{ title }}"
+      - service: notify.family_app
+        metadata: {}
+        data:
+          message: "{{ text }}"
+          title: "{{ title }}"
+  #  - id: "1705770025151"
+  #    alias: lawn_irrigation_enabled_day
+  #    description: "check if today is enabled for lawn irrigation"
+  #    trigger:
+  #      - platform: time
+  #        at: input_datetime.lawn_time_schedule
+  #    condition:
+  #      - condition: not
+  #        conditions:
+  #          - condition: or
+  #            conditions:
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+  #              - condition: template
+  #                value_template: '{{ states(''input_boolean.lawn_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+  #    action:
+  #      - service: notify.persistent_notification
+  #        data:
+  #          message: Today is enabled
+  #          title: Lawn Irrigation
+  #    mode: single
+  ################## START OF DISABLED DAY AUTOMATIONS ##################
+  - id: "1705785495258"
+    alias: lawn_scheduler_disabled_day
+    description: "check if today is disabled for lawn irrigation"
+    trigger:
+      - platform: time
+        at: input_datetime.lawn_time_schedule
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: automation.lawn_scheduler
+            state: "on"
+          - condition: or
+            conditions:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: >-
+                  {{ as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%H:%M')
+                  != now().strftime('%H:%M') }}
+              - condition: template
+                value_template: >-
+                  {{ ( as_datetime(now().strftime('%Y-%m-%d %H:%M')) - as_datetime(as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M')) ).days >=
+                  ( int(states('input_number.lawn_frequency'))+int(states('input_number.lawn_shifted')) ) }}
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - service: notify.persistent_notification
+        data:
+          message: Today's irrigation has been turned off
+          title: Lawn Irrigation
+    mode: single
+  - id: "1705785495259"
+    alias: strawberries_scheduler_disabled_day
+    description: "check if today is disabled for strawberries irrigation"
+    trigger:
+      - platform: time
+        at: input_datetime.strawberries_time_schedule
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: automation.strawberries_scheduler
+            state: "on"
+          - condition: or
+            conditions:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: >-
+                  {{ as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%H:%M')
+                  != now().strftime('%H:%M') }}
+              - condition: template
+                value_template: >-
+                  {{ ( as_datetime(now().strftime('%Y-%m-%d %H:%M')) - as_datetime(as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M')) ).days >=
+                  ( int(states('input_number.strawberries_frequency'))+int(states('input_number.strawberries_shifted')) ) }}
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - service: notify.persistent_notification
+        data:
+          message: Today's irrigation has been turned off
+          title: Strawberries Irrigation
+    mode: single
+  - id: "1705785495257"
+    alias: flowers_scheduler_disabled_day
+    description: "check if today is disabled for flowers irrigation"
+    trigger:
+      - platform: time
+        at: input_datetime.flowers_time_schedule
+    condition:
+      - condition: and
+        conditions:
+          - condition: state
+            entity_id: automation.flowers_scheduler
+            state: "on"
+          - condition: or
+            conditions:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: >-
+                  {{ as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%H:%M')
+                  != now().strftime('%H:%M') }}
+              - condition: template
+                value_template: >-
+                  {{ ( as_datetime(now().strftime('%Y-%m-%d %H:%M')) - as_datetime(as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M')) ).days >=
+                  ( int(states('input_number.flowers_frequency'))+int(states('input_number.flowers_shifted')) ) }}
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - service: notify.persistent_notification
+        data:
+          message: Today's irrigation has been turned off
+          title: Flowers Irrigation
+    mode: single
+  ################## END OF DISABLED DAY AUTOMATION ##################
+  ################## LAWN SCHEDULER ##################
+  # 1) replace lawn_irrigation_controller_multiplier with garden_irrigation_controller_multiplier
+  # 2) replace Lawn with Strawberries or Flowers (capital sensitive)
+  # 3) replace lawn with strawberries or flowers (lowercase)
+  # 4) replace irrigation command -> find "HERE"
+  # 5) id +1 for Straberries 1805442315262
+  #    id +2 for Flowers 1805442315263
+  # 6) replace zone1/4 logger with flowers or strawberries
+  - id: "1805442315261"
+    alias: lawn_scheduler
+    description: scheduler for lawn irrigation
+    variables:
+      irrigation_ok: false
+      irrigation_timechanged: false
+      pastdays: 0
+    trigger:
+      - platform: time
+        at: input_datetime.lawn_time_schedule
+    condition:
+      - condition: not
+        conditions:
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.lawn_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - variables:
+          pastdays: >- # set seconds to 0
+            {{ (
+            as_datetime(now().strftime('%Y-%m-%d %H:%M')) - 
+            as_datetime(as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M'))  
+            ).days }}
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.lawn_frequency'))+int(states('input_number.lawn_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+          irrigation_timechanged: >- # time_last_irrigation != time scheduled
+            {% if as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%H:%M') != now().strftime('%H:%M') %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - service: input_number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: input_number.lawn_multiplier # internal variable
+        data:
+          value: 1.0
+      - service: number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: number.lawn_irrigation_controller_multiplier # esphome variable
+        data:
+          value: 1.0
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: lawn Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.lawn_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.lawn_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.lawn_frequency'))+int(states('input_number.lawn_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                rain aware {{ states('input_boolean.lawn_rain_aware')}}
+      #### START IRRIGATION DELAY IF RAIN_AWARE IS ON
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.lawn_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        then:
+          - if:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: "{{ irrigation_timechanged == true }}"
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.lawn_shifted
+                data:
+                  value: "0"
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.lawn_shifted
+            data:
+              value: >-
+                {% set raindays =
+                int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                %}
+                {% set ns = namespace(rainyday=0) %}
+                {% for rainday in raindays %}
+                  {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                    {% set ns.rainyday = -loop.index %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if ns.rainyday == 0 %}
+                  {{ 0 }}
+                {% else %}
+                  {% set skipdays=ns.rainyday+int(states('input_number.lawn_frequency'))+1 %}
+                  {{ [ (skipdays ) | int(),0] | max + int(states('input_number.lawn_shifted')) }}
+                {% endif %}
+          - if: # message if rain delay is successfully
+              - condition: template
+                value_template: "{{ int(states('input_number.lawn_shifted')) > 0 }}"
+            then:
+              - service: persistent_notification.create
+                data:
+                  title: Lawn Irrigation
+                  message: >-
+                    {% set raindays =
+                    int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                    %}
+                    {% set text = "During last 24h","Between 48h and 24h ago","Between 72h and 48h ago","Between 96h and 72h ago" %}
+                    {% set ns = namespace(index=0) %}
+                    {% for rainday in raindays %}
+                      {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                        {% set ns.index = loop.index0 %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ text[ns.index] }} rain falled more than {{ int(states('input_number.watering_avoid_rainticks'))* float(states('input_number.raintick_mm')) | round(2) }} mm
+                    {{"<br>"}}
+                    Lawn irrigation has been shifted of total {{ int(states('input_number.lawn_shifted')) }} days
+      #### END IRRIGATION DELAY IF RAIN_AWARE IS ON
+      #### START PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.lawn_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        #              - condition: template # and only if shifted is 0
+        #                value_template: "{{ int(states('input_number.lawn_shifted')) == 0 }}"
+        then:
+          - if: # some rain in last 24h, at least 5 ticks
+              - condition: template
+                value_template: "{{ int(states('sensor.rain_stats_24h')) >= 3 }}" # min 1mm of rain
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.lawn_multiplier
+                data:
+                  value: >-
+                    {{ float( 1-(int(states('sensor.rain_stats_24h'))/int(states('input_number.watering_avoid_rainticks')) ) ) }}
+              - service: number.set_value
+                target:
+                  entity_id: number.lawn_irrigation_controller_multiplier
+                data:
+                  value: >-
+                    {{ float(states('input_number.lawn_multiplier')) }}
+              - service: persistent_notification.create # can't check number.lawn_irrigation_controller_multiplier as it's published back to homeassistant every 1 minute
+                data:
+                  title: Lawn Irrigation
+                  message: >-
+                    During last 24h rain falled {{ '%0.2f'| format(int(states('sensor.rain_stats_24h'))* float(states('input_number.raintick_mm')) | float) }} mm
+                    {{"<br>"}}
+                    Lawn irrigation will be reduced to {{ '%d' | format(float(states('input_number.lawn_multiplier')) * 100 ) }} %
+      #### END PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      # recalculate variable because of shifted day could be changed
+      - variables:
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.lawn_frequency'))+int(states('input_number.lawn_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: lawn Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.lawn_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.lawn_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.lawn_frequency'))+int(states('input_number.lawn_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                multiplier (internal variable) {{ float(states('input_number.lawn_multiplier')) }}
+      #### CHECK IRRIGATION CONDITIONS
+      # 1) time_last_irrigation != time scheduled
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_timechanged == true }}"
+            sequence:
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.lawn_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - if:
+                  - condition: template
+                    value_template: "{{ int(states('input_number.lawn_shifted')) == 0 }}"
+                then: # no rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time
+                        {{"<br>"}}
+                        RUN NOW
+                      title: Lawn Irrigation
+                  - service: switch.turn_on
+                    target:
+                      entity_id:
+                        - switch.lawn_start_stop_resume # replace HERE irrigation command switch.strawberries or switch.flowers
+                    data: {}
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.lawn_scheduler
+                      message: >-
+                        irrigation launched -
+                        zone1 for {{ '%0.2f'| format(int(states('number.lawn_zone1_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone2 for {{ '%0.2f'| format(int(states('number.lawn_zone2_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone3 for {{ '%0.2f'| format(int(states('number.lawn_zone3_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone4 for {{ '%0.2f'| format(int(states('number.lawn_zone4_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes
+                      name: lawn irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.lawn_irrigation_messages
+                    data:
+                      value: >-
+                        {{as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} lawn irrigation launched -
+                        zone1 for {{ '%0.2f'| format(int(states('number.lawn_zone1_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone2 for {{ '%0.2f'| format(int(states('number.lawn_zone2_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone3 for {{ '%0.2f'| format(int(states('number.lawn_zone3_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                        zone4 for {{ '%0.2f'| format(int(states('number.lawn_zone4_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes
+                else: # rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time, but it has been rained and it would be shifted by {{ int(states('input_number.lawn_shifted')) }} days, then
+                        {{"<br>"}}
+                        Set last irrigation at {{ as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} and waiting next cycle
+                      title: Lawn Irrigation
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.lawn_scheduler
+                      message: >-
+                        irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+                      name: lawn irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.lawn_irrigation_messages
+                    data:
+                      value: >-
+                        {{as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} lawn irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.lawn_shifted
+                data:
+                  value: "0"
+          # 2) irrigation time (passed right days and same time as usual)
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_ok == true }}"
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  message: >-
+                    past {{ pastdays }} days
+                    {{"<br>"}}
+                    previous irrigation was on {{as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                    {{"<br>"}}
+                    RUN NOW!
+                  title: Lawn Irrigation
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.lawn_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - service: switch.turn_on
+                target:
+                  entity_id:
+                    - switch.lawn_start_stop_resume # replace HERE irrigation command switch.strawberries or switch.flowers
+                data: {}
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.lawn_shifted
+                data:
+                  value: "0"
+              - service: logbook.log
+                data:
+                  entity_id: automation.lawn_scheduler
+                  message: >-
+                    irrigation launched -
+                    zone1 for {{ '%0.2f'| format(int(states('number.lawn_zone1_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone2 for {{ '%0.2f'| format(int(states('number.lawn_zone2_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone3 for {{ '%0.2f'| format(int(states('number.lawn_zone3_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone4 for {{ '%0.2f'| format(int(states('number.lawn_zone4_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes
+                  name: lawn irrigation
+              - service: input_text.set_value
+                target:
+                  entity_id: input_text.lawn_irrigation_messages
+                data:
+                  value: >-
+                    {{as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} lawn irrigation launched -
+                    zone1 for {{ '%0.2f'| format(int(states('number.lawn_zone1_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone2 for {{ '%0.2f'| format(int(states('number.lawn_zone2_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone3 for {{ '%0.2f'| format(int(states('number.lawn_zone3_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes -
+                    zone4 for {{ '%0.2f'| format(int(states('number.lawn_zone4_run_duration'))* float(states('input_number.lawn_multiplier')) ) }} minutes
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.lawn_next_irrigation
+        data:
+          datetime: >-
+            {{
+            as_datetime(states('input_datetime.lawn_last_irrigation')) +
+            timedelta( days=int(states('input_number.lawn_frequency')) + int(states('input_number.lawn_shifted')) )
+            }}
+      - if: # debug or just irrigated, then notify
+          - condition: or
+            conditions:
+              - condition: state
+                entity_id: input_boolean.irrigation_debug
+                state: "on"
+              - condition: template
+                value_template: >-
+                  {{ ( now() - as_datetime(states('input_datetime.lawn_last_irrigation')) ).days == 0 }}
+        then:
+          - service: persistent_notification.create
+            data:
+              message: >-
+                last irrigation was on {{ as_datetime(states('input_datetime.lawn_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                {{"<br>"}}
+                next irrigation would be on {{ as_datetime(states('input_datetime.lawn_next_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+              title: Lawn Irrigation
+    mode: single
+  ############### END OF LAWN SCHEDULER ###################
+
+  ################## STRAWBERRIES SCHEDULER ##################
+  - id: "1805442315262"
+    alias: strawberries_scheduler
+    description: scheduler for strawberries irrigation
+    variables:
+      irrigation_ok: false
+      irrigation_timechanged: false
+      pastdays: 0
+    trigger:
+      - platform: time
+        at: input_datetime.strawberries_time_schedule
+    condition:
+      - condition: not
+        conditions:
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.strawberries_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - variables:
+          pastdays: >- # set seconds to 0
+            {{ (
+            as_datetime(now().strftime('%Y-%m-%d %H:%M')) - 
+            as_datetime(as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M'))  
+            ).days }}
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.strawberries_frequency'))+int(states('input_number.strawberries_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+          irrigation_timechanged: >- # time_last_irrigation != time scheduled
+            {% if as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%H:%M') != now().strftime('%H:%M') %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - service: input_number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: input_number.garden_multiplier # internal variable
+        data:
+          value: 1.0
+      - service: number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: number.garden_irrigation_controller_multiplier # esphome variable
+        data:
+          value: 1.0
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: strawberries Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.strawberries_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.strawberries_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.strawberries_frequency'))+int(states('input_number.strawberries_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                rain aware {{ states('input_boolean.strawberries_rain_aware')}}
+      #### START IRRIGATION DELAY IF RAIN_AWARE IS ON
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.strawberries_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        then:
+          - if:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: "{{ irrigation_timechanged == true }}"
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.strawberries_shifted
+                data:
+                  value: "0"
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.strawberries_shifted
+            data:
+              value: >-
+                {% set raindays =
+                int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                %}
+                {% set ns = namespace(rainyday=0) %}
+                {% for rainday in raindays %}
+                  {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                    {% set ns.rainyday = -loop.index %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if ns.rainyday == 0 %}
+                  {{ 0 }}
+                {% else %}
+                  {% set skipdays=ns.rainyday+int(states('input_number.strawberries_frequency'))+1 %}
+                  {{ [ (skipdays ) | int(),0] | max + int(states('input_number.strawberries_shifted')) }}
+                {% endif %}
+          - if: # message if rain delay is successfully
+              - condition: template
+                value_template: "{{ int(states('input_number.strawberries_shifted')) > 0 }}"
+            then:
+              - service: persistent_notification.create
+                data:
+                  title: Strawberries Irrigation
+                  message: >-
+                    {% set raindays =
+                    int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                    %}
+                    {% set text = "During last 24h","Between 48h and 24h ago","Between 72h and 48h ago","Between 96h and 72h ago" %}
+                    {% set ns = namespace(index=0) %}
+                    {% for rainday in raindays %}
+                      {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                        {% set ns.index = loop.index0 %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ text[ns.index] }} rain falled more than {{ int(states('input_number.watering_avoid_rainticks'))* float(states('input_number.raintick_mm')) | round(2) }} mm
+                    {{"<br>"}}
+                    Strawberries irrigation has been shifted of total {{ int(states('input_number.strawberries_shifted')) }} days
+      #### END IRRIGATION DELAY IF RAIN_AWARE IS ON
+      #### START PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.strawberries_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        #              - condition: template # and only if shifted is 0
+        #                value_template: "{{ int(states('input_number.strawberries_shifted')) == 0 }}"
+        then:
+          - if: # some rain in last 24h, at least 5 ticks
+              - condition: template
+                value_template: "{{ int(states('sensor.rain_stats_24h')) >= 3 }}" # min 1mm of rain
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.garden_multiplier
+                data:
+                  value: >-
+                    {{ float( 1-(int(states('sensor.rain_stats_24h'))/int(states('input_number.watering_avoid_rainticks')) ) ) }}
+              - service: number.set_value
+                target:
+                  entity_id: number.garden_irrigation_controller_multiplier
+                data:
+                  value: >-
+                    {{ float(states('input_number.garden_multiplier')) }}
+              - service: persistent_notification.create # can't check number.garden_irrigation_controller_multiplier as it's published back to homeassistant every 1 minute
+                data:
+                  title: Strawberries Irrigation
+                  message: >-
+                    During last 24h rain falled {{ '%0.2f'| format(int(states('sensor.rain_stats_24h'))* float(states('input_number.raintick_mm')) | float) }} mm
+                    {{"<br>"}}
+                    Strawberries irrigation will be reduced to {{ '%d' | format(float(states('input_number.garden_multiplier')) * 100 ) }} %
+      #### END PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      # recalculate variable because of shifted day could be changed
+      - variables:
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.strawberries_frequency'))+int(states('input_number.strawberries_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: strawberries Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.strawberries_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.strawberries_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.strawberries_frequency'))+int(states('input_number.strawberries_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                garden multiplier (internal variable) {{ float(states('input_number.garden_multiplier')) }}
+      #### CHECK IRRIGATION CONDITIONS
+      # 1) time_last_irrigation != time scheduled
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_timechanged == true }}"
+            sequence:
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.strawberries_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - if:
+                  - condition: template
+                    value_template: "{{ int(states('input_number.strawberries_shifted')) == 0 }}"
+                then: # no rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time
+                        {{"<br>"}}
+                        RUN NOW
+                      title: Strawberries Irrigation
+                  - service: switch.turn_on
+                    target:
+                      entity_id:
+                        - switch.strawberries # replace HERE irrigation command switch.strawberries or switch.strawberries
+                    data: {}
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.strawberries_scheduler
+                      message: >-
+                        irrigation launched for {{ '%0.2f'| format(int(states('number.strawberries_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                      name: strawberries irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.strawberries_irrigation_messages
+                    data:
+                      value: >-
+                        {{as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} strawberries irrigation launched
+                        for {{ '%0.2f'| format(int(states('number.strawberries_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                else: # rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time, but it has been rained and it would be shifted by {{ int(states('input_number.strawberries_shifted')) }} days, then
+                        {{"<br>"}}
+                        Set last irrigation at {{ as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} and waiting next cycle
+                      title: Strawberries Irrigation
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.strawberries_scheduler
+                      message: >-
+                        irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+                      name: strawberries irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.strawberries_irrigation_messages
+                    data:
+                      value: >-
+                        {{as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} strawberries irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.strawberries_shifted
+                data:
+                  value: "0"
+          # 2) irrigation time (passed right days and same time as usual)
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_ok == true }}"
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  message: >-
+                    past {{ pastdays }} days
+                    {{"<br>"}}
+                    previous irrigation was on {{as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                    {{"<br>"}}
+                    RUN NOW!
+                  title: Strawberries Irrigation
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.strawberries_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - service: switch.turn_on
+                target:
+                  entity_id:
+                    - switch.strawberries # replace HERE irrigation command switch.strawberries or switch.strawberries
+                data: {}
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.strawberries_shifted
+                data:
+                  value: "0"
+              - service: logbook.log
+                data:
+                  entity_id: automation.strawberries_scheduler
+                  message: >-
+                    irrigation launched for {{ '%0.2f'| format(int(states('number.strawberries_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                  name: strawberries irrigation
+              - service: input_text.set_value
+                target:
+                  entity_id: input_text.strawberries_irrigation_messages
+                data:
+                  value: >-
+                    {{as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} strawberries irrigation launched
+                    for {{ '%0.2f'| format(int(states('number.strawberries_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.strawberries_next_irrigation
+        data:
+          datetime: >-
+            {{
+            as_datetime(states('input_datetime.strawberries_last_irrigation')) +
+            timedelta( days=int(states('input_number.strawberries_frequency')) + int(states('input_number.strawberries_shifted')) )
+            }}
+      - if: # debug or just irrigated, then notify
+          - condition: or
+            conditions:
+              - condition: state
+                entity_id: input_boolean.irrigation_debug
+                state: "on"
+              - condition: template
+                value_template: >-
+                  {{ ( now() - as_datetime(states('input_datetime.strawberries_last_irrigation')) ).days == 0 }}
+        then:
+          - service: persistent_notification.create
+            data:
+              message: >-
+                last irrigation was on {{ as_datetime(states('input_datetime.strawberries_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                {{"<br>"}}
+                next irrigation would be on {{ as_datetime(states('input_datetime.strawberries_next_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+              title: Strawberries Irrigation
+    mode: single
+  ############### END OF STRAWBERRIES ###################
+
+  ################## FLOWERS SCHEDULER ##################
+  - id: "1805442315263"
+    alias: flowers_scheduler
+    description: scheduler for flowers irrigation
+    variables:
+      irrigation_ok: false
+      irrigation_timechanged: false
+      pastdays: 0
+    trigger:
+      - platform: time
+        at: input_datetime.flowers_time_schedule
+    condition:
+      - condition: not
+        conditions:
+          - condition: or
+            conditions:
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_mon'') == "on" and now().isoweekday() == 1 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_tue'') == "on" and now().isoweekday() == 2 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_wed'') == "on" and now().isoweekday() == 3 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_thu'') == "on" and now().isoweekday() == 4 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_fri'') == "on" and now().isoweekday() == 5 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_sat'') == "on" and now().isoweekday() == 6 }}'
+              - condition: template
+                value_template: '{{ states(''input_boolean.flowers_skip_sun'') == "on" and now().isoweekday() == 7 }}'
+    action:
+      - variables:
+          pastdays: >- # set seconds to 0
+            {{ (
+            as_datetime(now().strftime('%Y-%m-%d %H:%M')) - 
+            as_datetime(as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M'))  
+            ).days }}
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.flowers_frequency'))+int(states('input_number.flowers_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+          irrigation_timechanged: >- # time_last_irrigation != time scheduled
+            {% if as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%H:%M') != now().strftime('%H:%M') %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - service: input_number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: input_number.garden_multiplier # internal variable
+        data:
+          value: 1.0
+      - service: number.set_value # reset multiplier to 1.0
+        target:
+          entity_id: number.garden_irrigation_controller_multiplier # esphome variable
+        data:
+          value: 1.0
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: flowers Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.flowers_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.flowers_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.flowers_frequency'))+int(states('input_number.flowers_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                rain aware {{ states('input_boolean.flowers_rain_aware')}}
+      #### START IRRIGATION DELAY IF RAIN_AWARE IS ON
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.flowers_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        then:
+          - if:
+              - condition: template # time_last_irrigation != time scheduled
+                value_template: "{{ irrigation_timechanged == true }}"
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.flowers_shifted
+                data:
+                  value: "0"
+          - service: input_number.set_value
+            target:
+              entity_id: input_number.flowers_shifted
+            data:
+              value: >-
+                {% set raindays =
+                int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                %}
+                {% set ns = namespace(rainyday=0) %}
+                {% for rainday in raindays %}
+                  {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                    {% set ns.rainyday = -loop.index %}
+                    {% break %}
+                  {% endif %}
+                {% endfor %}
+                {% if ns.rainyday == 0 %}
+                  {{ 0 }}
+                {% else %}
+                  {% set skipdays=ns.rainyday+int(states('input_number.flowers_frequency'))+1 %}
+                  {{ [ (skipdays ) | int(),0] | max + int(states('input_number.flowers_shifted')) }}
+                {% endif %}
+          - if: # message if rain delay is successfully
+              - condition: template
+                value_template: "{{ int(states('input_number.flowers_shifted')) > 0 }}"
+            then:
+              - service: persistent_notification.create
+                data:
+                  title: Flowers Irrigation
+                  message: >-
+                    {% set raindays =
+                    int(states('sensor.rain_stats_24h')),int(states('sensor.rain_stats_48_24h')),int(states('sensor.rain_stats_72_48h')),int(states('sensor.rain_stats_96_72h'))
+                    %}
+                    {% set text = "During last 24h","Between 48h and 24h ago","Between 72h and 48h ago","Between 96h and 72h ago" %}
+                    {% set ns = namespace(index=0) %}
+                    {% for rainday in raindays %}
+                      {% if rainday >= int(states('input_number.watering_avoid_rainticks')) %}
+                        {% set ns.index = loop.index0 %}
+                        {% break %}
+                      {% endif %}
+                    {% endfor %}
+                    {{ text[ns.index] }} rain falled more than {{ int(states('input_number.watering_avoid_rainticks'))* float(states('input_number.raintick_mm')) | round(2) }} mm
+                    {{"<br>"}}
+                    Flowers irrigation has been shifted of total {{ int(states('input_number.flowers_shifted')) }} days
+      #### END IRRIGATION DELAY IF RAIN_AWARE IS ON
+      #### START PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      - if:
+          - condition: and
+            conditions:
+              - condition: state
+                entity_id: input_boolean.flowers_rain_aware
+                state: "on"
+              - condition: template
+                value_template: "{{ irrigation_ok == true or irrigation_timechanged == true }}"
+        #              - condition: template # and only if shifted is 0
+        #                value_template: "{{ int(states('input_number.flowers_shifted')) == 0 }}"
+        then:
+          - if: # some rain in last 24h, at least 5 ticks
+              - condition: template
+                value_template: "{{ int(states('sensor.rain_stats_24h')) >= 3 }}" # min 1mm of rain
+            then:
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.garden_multiplier
+                data:
+                  value: >-
+                    {{ float( 1-(int(states('sensor.rain_stats_24h'))/int(states('input_number.watering_avoid_rainticks')) ) ) }}
+              - service: number.set_value
+                target:
+                  entity_id: number.garden_irrigation_controller_multiplier
+                data:
+                  value: >-
+                    {{ float(states('input_number.garden_multiplier')) }}
+              - service: persistent_notification.create # can't check number.garden_irrigation_controller_multiplier as it's published back to homeassistant every 1 minute
+                data:
+                  title: Flowers Irrigation
+                  message: >-
+                    During last 24h rain falled {{ '%0.2f'| format(int(states('sensor.rain_stats_24h'))* float(states('input_number.raintick_mm')) | float) }} mm
+                    {{"<br>"}}
+                    Flowers irrigation will be reduced to {{ '%d' | format(float(states('input_number.garden_multiplier')) * 100 ) }} %
+      #### END PROGRESSIVE IRRIGATION IF RAIN_AWARE ON and TODAY IS IRRIGATION TIME.
+      # recalculate variable because of shifted day could be changed
+      - variables:
+          irrigation_ok: >- # past right number of days
+            {% if pastdays >= ( int(states('input_number.flowers_frequency'))+int(states('input_number.flowers_shifted')) ) %}
+              {{ true }}
+            {% else %}
+              {{ false }}
+            {% endif %}
+      - if:
+          - condition: state
+            entity_id: input_boolean.irrigation_debug
+            state: "on"
+        then:
+          - service: persistent_notification.create
+            data:
+              title: flowers Irrigation DEBUG
+              message: >-
+                now {{ as_datetime(now().strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                last {{ as_datetime(as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M')) }}
+                {{"<br>"}}
+                now-last.days {{ pastdays }}
+                {{"<br>"}}
+                freq {{ int(states('input_number.flowers_frequency')) }}
+                {{"<br>"}}
+                shift {{ int(states('input_number.flowers_shifted')) }}
+                {{"<br>"}}
+                freq+shift {{ int(states('input_number.flowers_frequency'))+int(states('input_number.flowers_shifted')) }}
+                {{"<br>"}}
+                irrigation_ok {{ irrigation_ok }}
+                {{"<br>"}}
+                irrigation_timechanged {{ irrigation_timechanged }}
+                {{"<br>"}}
+                garden multiplier (internal variable) {{ float(states('input_number.garden_multiplier')) }}
+      #### CHECK IRRIGATION CONDITIONS
+      # 1) time_last_irrigation != time scheduled
+      - choose:
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_timechanged == true }}"
+            sequence:
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.flowers_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - if:
+                  - condition: template
+                    value_template: "{{ int(states('input_number.flowers_shifted')) == 0 }}"
+                then: # no rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time
+                        {{"<br>"}}
+                        RUN NOW
+                      title: Flowers Irrigation
+                  - service: switch.turn_on
+                    target:
+                      entity_id:
+                        - switch.flowers # replace HERE irrigation command switch.strawberries or switch.flowers
+                    data: {}
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.flowers_scheduler
+                      message: >-
+                        irrigation launched for {{ '%0.2f'| format(int(states('number.flowers_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                      name: flowers irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.flowers_irrigation_messages
+                    data:
+                      value: >-
+                        {{ as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} flowers irrigation launched
+                        for {{ '%0.2f'| format(int(states('number.flowers_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                else: # rain delay
+                  - service: persistent_notification.create
+                    data:
+                      message: >-
+                        Scheduled time has been changed or first irrigation time, but it has been rained and it would be shifted by {{ int(states('input_number.flowers_shifted')) }} days, then
+                        {{"<br>"}}
+                        Set last irrigation at {{ as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} and waiting next cycle
+                      title: Flowers Irrigation
+                  - service: logbook.log
+                    data:
+                      entity_id: automation.flowers_scheduler
+                      message: >-
+                        irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+                      name: flowers irrigation
+                  - service: input_text.set_value
+                    target:
+                      entity_id: input_text.flowers_irrigation_messages
+                    data:
+                      value: >-
+                        {{as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} irrigation avoided - Scheduled time has been changed or first irrigation time, but it has been rained and set next irrigation as normal.
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.flowers_shifted
+                data:
+                  value: "0"
+          # 2) irrigation time (passed right days and same time as usual)
+          - conditions:
+              - condition: template
+                value_template: "{{ irrigation_ok == true }}"
+            sequence:
+              - service: persistent_notification.create
+                data:
+                  message: >-
+                    past {{ pastdays }} days
+                    {{"<br>"}}
+                    previous irrigation was on {{as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                    {{"<br>"}}
+                    RUN NOW!
+                  title: Flowers Irrigation
+              - service: input_datetime.set_datetime
+                target:
+                  entity_id: input_datetime.flowers_last_irrigation
+                data:
+                  datetime: "{{ now().strftime('%Y-%m-%d %H:%M:00') }}"
+              - service: switch.turn_on
+                target:
+                  entity_id:
+                    - switch.flowers # replace HERE irrigation command switch.strawberries or switch.flowers
+                data: {}
+              - service: input_number.set_value
+                target:
+                  entity_id: input_number.flowers_shifted
+                data:
+                  value: "0"
+              - service: logbook.log
+                data:
+                  entity_id: automation.flowers_scheduler
+                  message: >-
+                    irrigation launched for {{ '%0.2f'| format(int(states('number.flowers_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+                  name: flowers irrigation
+              - service: input_text.set_value
+                target:
+                  entity_id: input_text.flowers_irrigation_messages
+                data:
+                  value: >-
+                    {{as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }} flowers irrigation launched
+                    for {{ '%0.2f'| format(int(states('number.flowers_run_duration'))* float(states('input_number.garden_multiplier')) ) }} minutes
+      - service: input_datetime.set_datetime
+        target:
+          entity_id: input_datetime.flowers_next_irrigation
+        data:
+          datetime: >-
+            {{
+            as_datetime(states('input_datetime.flowers_last_irrigation')) +
+            timedelta( days=int(states('input_number.flowers_frequency')) + int(states('input_number.flowers_shifted')) )
+            }}
+      - if: # debug or just irrigated, then notify
+          - condition: or
+            conditions:
+              - condition: state
+                entity_id: input_boolean.irrigation_debug
+                state: "on"
+              - condition: template
+                value_template: >-
+                  {{ ( now() - as_datetime(states('input_datetime.flowers_last_irrigation')) ).days == 0 }}
+        then:
+          - service: persistent_notification.create
+            data:
+              message: >-
+                last irrigation was on {{ as_datetime(states('input_datetime.flowers_last_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+                {{"<br>"}}
+                next irrigation would be on {{ as_datetime(states('input_datetime.flowers_next_irrigation')).strftime('%Y-%m-%d %H:%M') }}
+              title: Flowers Irrigation
+    mode: single
+############### END OF FLOWERS ###################
