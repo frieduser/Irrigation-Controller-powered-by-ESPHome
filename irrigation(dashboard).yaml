@@ -1,0 +1,1225 @@
+title: Irrigation
+views:
+  - title: Irrigation
+    path: irrigation
+    icon: mdi:sprinkler
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - square: false
+            type: grid
+            columns: 3
+            cards:
+              - type: custom:button-card
+                name: Scheduler
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: automation.lawn_scheduler
+                icon: mdi:clock-remove-outline
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: rgb(255,0,0)
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:clock-check
+              - type: custom:button-card
+                name: Auto advance
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: switch.lawn_auto_advance
+                icon: mdi:share-off
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: yellow
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:share
+              - type: custom:button-card
+                name: Rain aware
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: input_boolean.lawn_rain_aware
+                icon: mdi:weather-pouring
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: yellow
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:weather-pouring
+          - square: true
+            type: grid
+            cards:
+              - type: custom:button-card
+                name: Start/Stop/Resume
+                show_state: true
+                show_name: false
+                aspect_ratio: 1/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.lawn_start_stop_resume
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Zone1
+                show_state: true
+                show_name: true
+                aspect_ratio: 1/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.lawn_zone1
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Zone2
+                show_state: true
+                show_name: true
+                aspect_ratio: 1/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.lawn_zone2
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Zone3
+                show_state: true
+                show_name: true
+                aspect_ratio: 1/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.lawn_zone3
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Zone4
+                show_state: true
+                show_name: true
+                aspect_ratio: 1/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.lawn_zone4
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+            columns: 5
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            entity: number.lawn_zone1_run_duration
+            name: Zone1
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            entity: number.lawn_zone2_run_duration
+            name: Zone2
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            entity: number.lawn_zone3_run_duration
+            name: Zone3
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            entity: number.lawn_zone4_run_duration
+            name: Zone4
+          - type: custom:time-picker-card
+            entity: input_datetime.lawn_time_schedule
+            name: Lawn Scheduling
+            layout:
+              align_controls: right
+              embedded: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Mon
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_mon
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Tue
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_tue
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Wed
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_wed
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Thu
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_thu
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Fri
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_fri
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sat
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_sat
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sun
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.lawn_skip_sun
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+          - type: entities
+            entities:
+              - type: custom:numberbox-card
+                entity: input_number.lawn_frequency
+                name: Lawn irrigation frequency
+                border: false
+              - entity: input_datetime.lawn_last_irrigation
+                name: Last Irrigation
+                type: simple-entity
+              - entity: input_datetime.lawn_next_irrigation
+                name: Next Irrigation
+                type: simple-entity
+      - type: vertical-stack
+        cards:
+          - square: false
+            type: grid
+            columns: 3
+            cards:
+              - type: custom:button-card
+                name: Flowers Scheduler
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: automation.flowers_scheduler
+                icon: mdi:clock-remove-outline
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: rgb(255,0,0)
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:clock-check
+              - type: custom:button-card
+                name: Flowers
+                show_state: true
+                show_name: true
+                aspect_ratio: 1.4/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.flowers
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Rain aware
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: input_boolean.flowers_rain_aware
+                icon: mdi:weather-pouring
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: yellow
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:weather-pouring
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            name: Flowers
+            entity: number.flowers_run_duration
+          - type: custom:time-picker-card
+            entity: input_datetime.flowers_time_schedule
+            name: Flowers Scheduling
+            layout:
+              align_controls: right
+              embedded: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Mon
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_mon
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Tue
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_tue
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Wed
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_wed
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Thu
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_thu
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Fri
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_fri
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sat
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_sat
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sun
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.flowers_skip_sun
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+          - type: entities
+            entities:
+              - type: custom:numberbox-card
+                entity: input_number.flowers_frequency
+                name: Flowers irrigation frequency
+              - entity: input_datetime.flowers_last_irrigation
+                name: Flowers Last Irrigation
+                type: simple-entity
+              - entity: input_datetime.flowers_next_irrigation
+                name: Flowers Next Irrigation
+                type: simple-entity
+      - type: vertical-stack
+        cards:
+          - square: false
+            type: grid
+            columns: 3
+            cards:
+              - type: custom:button-card
+                name: Strawberries Scheduler
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: automation.strawberries_scheduler
+                icon: mdi:clock-remove-outline
+                secondary_info: last-triggered
+                state:
+                  - value: 'off'
+                    color: rgb(255,0,0)
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:clock-check
+              - type: custom:button-card
+                name: Strawberries
+                show_state: true
+                show_name: true
+                aspect_ratio: 1.4/1
+                color_type: card
+                icon: mdi:sprinkler
+                entity: switch.strawberries
+                state:
+                  - value: 'on'
+                    color: rgb(0, 150, 193)
+                    icon: mdi:sprinkler
+              - type: custom:button-card
+                name: Rain aware
+                show_name: true
+                color_type: card
+                aspect_ratio: 1/1
+                entity: input_boolean.strawberries_rain_aware
+                icon: mdi:weather-pouring
+                state:
+                  - value: 'off'
+                    color: yellow
+                  - value: 'on'
+                    color: rgb(0,130,0)
+                    icon: mdi:weather-pouring
+          - type: custom:numberbox-card
+            icon: mdi:ray-vertex
+            name: Strawberries
+            entity: number.strawberries_run_duration
+          - type: custom:time-picker-card
+            entity: input_datetime.strawberries_time_schedule
+            name: Straberries Scheduling
+            layout:
+              align_controls: right
+              embedded: true
+          - type: horizontal-stack
+            cards:
+              - type: custom:button-card
+                name: Mon
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_mon
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Tue
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_tue
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Wed
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_wed
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Thu
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_thu
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Fri
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_fri
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sat
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_sat
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+              - type: custom:button-card
+                name: Sun
+                aspect_ratio: 1.5/1
+                show_icon: false
+                color_type: card
+                entity: input_boolean.strawberries_skip_sun
+                state:
+                  - value: 'off'
+                    color: rgb(0,130,0)
+                  - value: 'on'
+                    color: rgb(255,0,0)
+          - type: entities
+            entities:
+              - type: custom:numberbox-card
+                entity: input_number.strawberries_frequency
+                name: Strawberries irrigation frequency
+              - entity: input_datetime.strawberries_last_irrigation
+                name: Strawberries Last Irrigation
+                type: simple-entity
+              - entity: input_datetime.strawberries_next_irrigation
+                name: Strawberries Next Irrigation
+                type: simple-entity
+  - title: Rain
+    path: rain
+    icon: mdi:weather-rainy
+    badges: []
+    cards:
+      - title: Rain Gauge (mm)
+        type: entities
+        entities:
+          - entity: sensor.rainfall_today
+            secondary_info: last-changed
+          - entity: sensor.rainfall_yesterday
+            secondary_info: last-changed
+          - entity: sensor.rainfall_2daysago
+            secondary_info: last-changed
+          - entity: sensor.rainfall_3daysago
+            secondary_info: last-changed
+          - entity: sensor.rainfall_last24h
+            name: Rainfall in last 24h (from now)
+            secondary_info: last-updated
+          - entity: sensor.rainfall_4824h_ago
+            name: Rainfall between 48h-24h ago
+            secondary_info: last-changed
+          - entity: sensor.rainfall_7248h_ago
+            name: Rainfall between 72h-48h ago
+            secondary_info: last-changed
+          - entity: sensor.rainfall_9672h_ago
+            name: Rainfall between 96h-72h ago
+            secondary_info: last-updated
+      - type: entities
+        entities:
+          - entity: sensor.rain_stats_today
+            name: Rainfall today (until now)
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_yesterday
+            name: Rainfall yesterday
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_2daysago
+            name: Rainfall the day before yesterday
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_3daysago
+            name: Rainfall three days ago
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_24h
+            name: Rainfall in last 24h (from now)
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_48_24h
+            name: Rainfall between 48h-24h ago  (from now)
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_72_48h
+            name: Rainfall between 72h-48h ago  (from now)
+            secondary_info: last-changed
+          - entity: sensor.rain_stats_96_72h
+            name: Rainfall between 96h-72h ago  (from now)
+            secondary_info: last-changed
+          - entity: binary_sensor.raintick
+          - entity: input_number.watering_avoid_rainticks
+          - entity: input_number.raintick_mm
+        title: Rain Gauge tick
+      - show_name: true
+        show_icon: true
+        type: button
+        tap_action:
+          action: toggle
+        entity: switch.rain_simulator
+      - type: entities
+        entities:
+          - entity: input_number.lawn_shifted
+          - entity: input_number.flowers_shifted
+          - entity: input_number.strawberries_shifted
+        title: Shifted Days
+      - type: entities
+        entities:
+          - entity: input_datetime.lawn_last_irrigation
+          - entity: input_datetime.flowers_last_irrigation
+          - entity: input_datetime.strawberries_last_irrigation
+        title: Last Irrigation
+      - type: entities
+        entities:
+          - entity: sensor.esp_porch_porch_humidity
+            name: Porch Humidity
+          - entity: sensor.esp_porch_porch_temperature
+            name: Porch Temperature
+          - entity: sensor.esp_porch_porchroof_pressure
+        title: Outside (Porch)
+      - title: Outside Temperatures (Porch)
+        type: entities
+        entities:
+          - entity: sensor.outside_average_temperature_today
+          - entity: sensor.outside_average_temperature_yesterday
+          - entity: sensor.outside_average_temperature_2daysago
+          - entity: sensor.outside_average_temperature_3daysago
+          - entity: sensor.outside_average_temperature_4daysago
+          - entity: sensor.outside_average_temperature_today
+            type: attribute
+            attribute: max_value
+            name: Outside Max Temperature_today
+            suffix: ° C
+          - entity: sensor.outside_average_temperature_yesterday
+            type: attribute
+            attribute: max_value
+            name: Outside Max Temperature_yesterday
+            suffix: ° C
+          - entity: sensor.outside_average_temperature_2daysago
+            type: attribute
+            attribute: max_value
+            name: Outside Max Temperature_2daysago
+            suffix: ° C
+          - entity: sensor.outside_average_temperature_3daysago
+            type: attribute
+            attribute: max_value
+            name: Outside Max Temperature_3daysago
+            suffix: ° C
+          - entity: sensor.outside_average_temperature_4daysago
+            type: attribute
+            attribute: max_value
+            name: Outside Max Temperature_4daysago
+            suffix: ° C
+  - icon: mdi:tools
+    title: Maitenance
+    path: maitenance
+    badges: []
+    cards:
+      - type: entities
+        entities:
+          - entity: sensor.irrigation_esphome_version
+            name: ESPHome Version
+          - entity: sensor.irrigation_espboard
+            name: ESPBoard
+          - entity: update.esppoetest_firmware
+          - entity: sensor.lawn_irrigation_controller_uptime
+          - entity: sensor.garden_irrigation_controller_uptime
+        title: Maintenance
+      - type: entities
+        entities:
+          - entity: switch.lawn_auto_advance
+          - entity: switch.enable_lawn_zone1
+          - entity: switch.enable_lawn_zone2
+          - entity: switch.enable_lawn_zone3
+          - entity: switch.enable_lawn_zone4
+          - entity: switch.garden_auto_advance
+          - entity: switch.enable_strawberries
+          - entity: switch.enable_flowers
+          - entity: number.lawn_irrigation_controller_multiplier
+          - entity: number.garden_irrigation_controller_multiplier
+          - entity: input_number.lawn_multiplier
+          - entity: input_number.garden_multiplier
+          - entity: input_boolean.irrigation_debug
+        title: Setting Switch
+        show_header_toggle: false
+  - title: Progress
+    path: progress
+    icon: mdi:progress-wrench
+    badges: []
+    cards:
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.lawn_irrigation_controller_progress
+              - entity: sensor.lawn_irrigation_controller_status
+              - entity: sensor.lawn_irrigation_controller_time_remaining
+            title: Lawn progress messages
+            show_header_toggle: false
+          - type: markdown
+            content: '{{ states(''input_text.lawn_irrigation_messages'') }}'
+      - type: vertical-stack
+        cards:
+          - type: entities
+            entities:
+              - entity: sensor.garden_irrigation_controller_progress
+              - entity: sensor.garden_irrigation_controller_status
+              - entity: sensor.garden_irrigation_controller_time_remaining
+            title: Garden progress message
+            show_header_toggle: false
+          - type: markdown
+            content: '{{ states(''input_text.strawberries_irrigation_messages'') }}'
+          - type: markdown
+            content: '{{ states(''input_text.flowers_irrigation_messages'') }}'
+  - title: Irrigation2
+    path: Irrigation_slide
+    icon: mdi:sprinkler
+    subview: false
+    badges: []
+    cards:
+      - type: custom:swipe-card
+        cards:
+          - type: vertical-stack
+            cards:
+              - square: false
+                type: grid
+                columns: 3
+                cards:
+                  - type: custom:button-card
+                    name: Scheduler
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: automation.lawn_scheduler
+                    icon: mdi:clock-remove-outline
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: rgb(255,0,0)
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:clock-check
+                  - type: custom:button-card
+                    name: Auto advance
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: switch.lawn_auto_advance
+                    icon: mdi:share-off
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: yellow
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:share
+                  - type: custom:button-card
+                    name: Rain aware
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: input_boolean.lawn_rain_aware
+                    icon: mdi:weather-pouring
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: yellow
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:weather-pouring
+              - square: true
+                type: grid
+                cards:
+                  - type: custom:button-card
+                    name: Start/Stop/Resume
+                    show_state: true
+                    show_name: false
+                    aspect_ratio: 1/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.lawn_start_stop_resume
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Zone1
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.lawn_zone1
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Zone2
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.lawn_zone2
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Zone3
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.lawn_zone3
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Zone4
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.lawn_zone4
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                columns: 5
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                entity: number.lawn_zone1_run_duration
+                name: Zone1
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                name: Zone2
+                entity: number.lawn_zone2_run_duration
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                name: Zone3
+                entity: number.lawn_zone3_run_duration
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                name: Zone4
+                entity: number.lawn_zone4_run_duration
+              - type: custom:time-picker-card
+                entity: input_datetime.lawn_time_schedule
+                name: Lawn Scheduling
+                layout:
+                  align_controls: right
+                  embedded: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:button-card
+                    name: Mon
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_mon
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Tue
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_tue
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Wed
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_wed
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Thu
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_thu
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Fri
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_fri
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sat
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_sat
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sun
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.lawn_skip_sun
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+              - type: entities
+                entities:
+                  - type: custom:numberbox-card
+                    entity: input_number.lawn_frequency
+                    name: Lawn irrigation frequency
+                    border: false
+                  - entity: input_datetime.lawn_last_irrigation
+                    name: Last Irrigation
+                    type: simple-entity
+                  - entity: input_datetime.lawn_next_irrigation
+                    name: Next Irrigation
+                    type: simple-entity
+          - type: vertical-stack
+            cards:
+              - square: false
+                type: grid
+                columns: 3
+                cards:
+                  - type: custom:button-card
+                    name: Flowers Scheduler
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: automation.flowers_scheduler
+                    icon: mdi:clock-remove-outline
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: rgb(255,0,0)
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:clock-check
+                  - type: custom:button-card
+                    name: Flowers
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1.4/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.flowers
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Rain aware
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: input_boolean.flowers_rain_aware
+                    icon: mdi:weather-pouring
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: yellow
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:weather-pouring
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                name: Flowers
+                entity: number.flowers_run_duration
+              - type: custom:time-picker-card
+                entity: input_datetime.flowers_time_schedule
+                name: Flowers Scheduling
+                layout:
+                  align_controls: right
+                  embedded: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:button-card
+                    name: Mon
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_mon
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Tue
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_tue
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Wed
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_wed
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Thu
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_thu
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Fri
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_fri
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sat
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_sat
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sun
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.flowers_skip_sun
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+              - type: entities
+                entities:
+                  - type: custom:numberbox-card
+                    entity: input_number.flowers_frequency
+                    name: Flowers irrigation frequency
+                  - entity: input_datetime.flowers_last_irrigation
+                    name: Flowers Last Irrigation
+                    type: simple-entity
+                  - entity: input_datetime.flowers_next_irrigation
+                    name: Flowers Next Irrigation
+                    type: simple-entity
+          - type: vertical-stack
+            cards:
+              - square: false
+                type: grid
+                columns: 3
+                cards:
+                  - type: custom:button-card
+                    name: Strawberries Scheduler
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: automation.strawberries_scheduler
+                    icon: mdi:clock-remove-outline
+                    secondary_info: last-triggered
+                    state:
+                      - value: 'off'
+                        color: rgb(255,0,0)
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:clock-check
+                  - type: custom:button-card
+                    name: Strawberries
+                    show_state: true
+                    show_name: true
+                    aspect_ratio: 1.4/1
+                    color_type: card
+                    icon: mdi:sprinkler
+                    entity: switch.strawberries
+                    state:
+                      - value: 'on'
+                        color: rgb(0, 150, 193)
+                        icon: mdi:sprinkler
+                  - type: custom:button-card
+                    name: Rain aware
+                    show_name: true
+                    color_type: card
+                    aspect_ratio: 1/1
+                    entity: input_boolean.strawberries_rain_aware
+                    icon: mdi:weather-pouring
+                    state:
+                      - value: 'off'
+                        color: yellow
+                      - value: 'on'
+                        color: rgb(0,130,0)
+                        icon: mdi:weather-pouring
+              - type: custom:numberbox-card
+                icon: mdi:ray-vertex
+                name: Strawberries
+                entity: number.strawberries_run_duration
+              - type: custom:time-picker-card
+                entity: input_datetime.strawberries_time_schedule
+                name: Straberries Scheduling
+                layout:
+                  align_controls: right
+                  embedded: true
+              - type: horizontal-stack
+                cards:
+                  - type: custom:button-card
+                    name: Mon
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_mon
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Tue
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_tue
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Wed
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_wed
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Thu
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_thu
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Fri
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_fri
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sat
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_sat
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+                  - type: custom:button-card
+                    name: Sun
+                    aspect_ratio: 1.5/1
+                    show_icon: false
+                    color_type: card
+                    entity: input_boolean.strawberries_skip_sun
+                    state:
+                      - value: 'off'
+                        color: rgb(0,130,0)
+                      - value: 'on'
+                        color: rgb(255,0,0)
+              - type: entities
+                entities:
+                  - type: custom:numberbox-card
+                    entity: input_number.strawberries_frequency
+                    name: Strawberries irrigation frequency
+                  - entity: input_datetime.strawberries_last_irrigation
+                    name: Strawberries Last Irrigation
+                    type: simple-entity
+                  - entity: input_datetime.strawberries_next_irrigation
+                    name: Strawberries Next Irrigation
+                    type: simple-entity
