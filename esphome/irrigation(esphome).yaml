@@ -1,0 +1,476 @@
+# made by frieduser on March 2024
+# thanks to Alaric
+# this program has been customized by androtto on what Alaric did
+# https://community.home-assistant.io/t/sprinkler-automation-with-esphome-a-complete-project/565077
+# leveragin on https://esphome.io/components/sprinkler.html 
+
+########################################
+#  CHANGE BELOW LINES FOR YOUR NEEDS ###
+########################################
+# Establish Substitutions
+substitutions:
+  dev1_what: Lawn
+  devicename1: ${dev1_what}_irrigation_controller
+  upper_devicename1: "${dev1_what} Irrigation Controller"
+  dev1_zone1: Lawn Zone1
+  dev1_zone2: Lawn Zone2
+  dev1_zone3: Lawn Zone3
+  dev1_zone4: Lawn Zone4
+  dev1_zone1_id: dev1_valve_0
+  dev1_zone2_id: dev1_valve_1
+  dev1_zone3_id: dev1_valve_2
+  dev1_zone4_id: dev1_valve_3
+  dev2_what: Garden
+  devicename2: ${dev2_what}_irrigation_controller
+  upper_devicename2: "${dev2_what} Irrigation Controller"
+  dev2_zone1: Strawberries
+  dev2_zone2: Flowers
+  dev2_zone1_id: dev2_valve_0
+  dev2_zone2_id: dev2_valve_1
+  software_revision: V2.0
+  date_revision: 2024 03 08
+  sensor_update_frequency: 1s
+  log_level: debug # Enable levels logging https://esphome.io/components/logger.html
+  # none, error, warn, info, debug (default), verbose, very_verbose
+###################################
+#  CHANGE BELOW LINES IF NEEDED ###
+###################################
+  esphome_name: "irrigation"
+  esphome_platform: ESP32
+  esphome_board: esp32dev # https://www.lilygo.cc/products/t-internet-poe
+  esp32_board: "LILYGO TTGO T-Internet-POE"
+  esphome_comment: Irrigation Control System
+  esphome_project_name: AG.Irrigation Control System
+  esphome_project_version: ICS, $software_revision
+  uom: Min # this overrides the uom in sprinkler -> run_duration 
+
+#Define Project Deatils and ESP Board Type
+esphome:
+  name: $esphome_name
+  platform: $esphome_platform
+  board: $esphome_board
+  comment: $esphome_comment
+  project:
+    name: $esphome_project_name
+    version: $esphome_project_version
+  on_boot:
+    priority: -100
+    then:
+      # Set default state for Valve Status
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "Idle"
+      - text_sensor.template.publish:
+          id: dev2_valve_status
+          state: "Idle"
+      # reset multiplier at reboot # used for progressive irrigation
+      - sprinkler.set_multiplier: 
+          id: $devicename1
+          multiplier: 1
+      - sprinkler.set_multiplier:
+          id: $devicename2
+          multiplier: 1
+
+ethernet:
+  type: LAN8720
+  mdc_pin: GPIO23
+  mdio_pin: GPIO18
+  clk_mode: GPIO17_OUT
+  phy_addr: 0
+# LILYGO TTGO T-Internet-POE ESP32
+
+api:
+  encryption:
+    key: !secret irrigation_api_encrypt_key
+
+ota:
+  password: !secret irrigation_ota_password
+  id: my_ota
+
+logger:
+  level: ${log_level}
+  logs:
+    text_sensor: WARN
+
+globals:
+  id: tot_raintick
+  type: int
+  restore_value: False
+
+# Enable Web server.
+#web_server:
+#  port: 80
+
+# Sync time with Home Assistant.
+time:
+  - platform: homeassistant
+    id: homeassistant_time
+
+###############################################
+# Binary Sensor.
+###############################################
+#binary_sensor:
+#  - platform: homeassistant
+#    # prevent deep sleep - Needs further investigation on usefullness
+#    id: prevent_deep_sleep
+#    name: "$upper_devicename1 Prevent Deep Sleep"
+#    entity_id: input_boolean.prevent_deep_sleep  
+binary_sensor:
+  - platform: gpio
+    pin:
+      number: GPIO36
+      inverted: true
+      mode:
+        input: true
+        #pullup: true
+    name: "raintick"
+    device_class: vibration
+    id: "raintick_gauge"
+    on_press:
+      then:
+        lambda: id(tot_raintick) += 1;
+    #filters:
+    #  - delayed_off: 300ms
+
+###############################################
+# Text sensors with general information.
+###############################################
+text_sensor:
+  - platform: version # Expose ESPHome version as sensor.
+    name: $esphome_name ESPHome Version
+    hide_timestamp: false
+  
+# Expose Time Remaining as a sensor.
+  - platform: template
+    id: dev1_time_remaining
+    name: $upper_devicename1 Time Remaining
+    update_interval: $sensor_update_frequency
+    icon: "mdi:timer-sand"
+    lambda: |-
+      int seconds = round(id($devicename1).time_remaining_active_valve().value_or(0));
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600);
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+        return {
+          ((days ? String(days) + "d " : "") + 
+          (hours ? String(hours) + "h " : "") +
+          (minutes ? String(minutes) + "m " : "") +
+          (String(seconds) + "s")).c_str()};
+  - platform: template
+    id: dev2_time_remaining
+    name: $upper_devicename2 Time Remaining
+    update_interval: $sensor_update_frequency
+    icon: "mdi:timer-sand"
+    lambda: |-
+      int seconds = round(id($devicename2).time_remaining_active_valve().value_or(0));
+      int days = seconds / (24 * 3600);
+      seconds = seconds % (24 * 3600);
+      int hours = seconds / 3600;
+      seconds = seconds % 3600;
+      int minutes = seconds /  60;
+      seconds = seconds % 60;
+        return {
+          ((days ? String(days) + "d " : "") + 
+          (hours ? String(hours) + "h " : "") +
+          (minutes ? String(minutes) + "m " : "") +
+          (String(seconds) + "s")).c_str()};
+          
+  # Expose Progress Percent as a sensor.
+  - platform: template
+    id: dev1_progress_percent
+    name: $upper_devicename1 Progress %
+    update_interval: $sensor_update_frequency
+    icon: "mdi:progress-clock"
+    lambda: |-
+      int progress_percent = round(((id($devicename1).valve_run_duration_adjusted(id($devicename1).active_valve().value_or(0)) - id($devicename1).time_remaining_active_valve().value_or(0)) * 100 / id($devicename1).valve_run_duration_adjusted(id($devicename1).active_valve().value_or(0))));
+      std::string progress_percent_as_string = std::to_string(progress_percent);
+      return progress_percent_as_string +"%";
+  - platform: template
+    id: dev2_progress_percent
+    name: $upper_devicename2 Progress %
+    update_interval: $sensor_update_frequency
+    icon: "mdi:progress-clock"
+    lambda: |-
+      int progress_percent = round(((id($devicename2).valve_run_duration_adjusted(id($devicename2).active_valve().value_or(0)) - id($devicename2).time_remaining_active_valve().value_or(0)) * 100 / id($devicename2).valve_run_duration_adjusted(id($devicename2).active_valve().value_or(0))));
+      std::string progress_percent_as_string = std::to_string(progress_percent);
+      return progress_percent_as_string +"%";
+      
+  # Expose Valve Status as a sensor.
+  - platform: template
+    id: dev1_valve_status
+    name: $upper_devicename1 Status
+    update_interval: never
+    icon: "mdi:information-variant"
+  - platform: template
+    id: dev2_valve_status
+    name: $upper_devicename2 Status
+    update_interval: never
+    icon: "mdi:information-variant"
+  - platform: template # Expose the board type as a sensor
+    id: espboard_type
+    icon: "mdi:developer-board"
+    name: $esphome_name ESPBoard
+    update_interval: 3600s
+    lambda: |-
+      return to_string("${esp32_board}");
+
+sensor:
+  # Uptime sensor.
+  - platform: uptime
+    name: $upper_devicename1 Uptime
+  - platform: uptime
+    name: $upper_devicename2 Uptime
+ 
+#  - platform: template
+#    name: "Rainfall"
+#    unit_of_measurement: "mm"
+#    state_class: "total_increasing"
+#    icon: "mdi:weather-pouring"
+#    accuracy_decimals: 2
+#    lambda: |-
+#      return id(tot_raintick) * 0.303;
+
+###############################################
+# Configuration to set multiplier via number 
+############################################### 
+number:
+  # start multiplier set 
+  - platform: template
+    id: "${dev1_what}_multiplier"
+    name: "${devicename1}_multiplier"
+    min_value: 0.01
+    max_value: 2.00
+    step: 0.01
+    icon: "mdi:water-percent"
+    mode: slider # Defines how the number should be displayed in the UI
+    lambda: "return id($devicename1).multiplier();"
+    set_action:
+      - sprinkler.set_multiplier:
+          id: $devicename1
+          multiplier: !lambda 'return x;'
+  - platform: template
+    id: "${dev2_what}_multiplier"
+    name: "${devicename2}_multiplier"
+    min_value: 0.01
+    max_value: 2.00
+    step: 0.01
+    icon: "mdi:water-percent"
+    mode: slider # Defines how the number should be displayed in the UI
+    lambda: "return id($devicename2).multiplier();"
+    set_action:
+      - sprinkler.set_multiplier:
+          id: $devicename2
+          multiplier: !lambda 'return x;'
+  # end multiplier set 
+
+###############################################
+# Main Sprinkler Controller
+###############################################
+sprinkler:
+  - id: $devicename1
+    main_switch:
+      name: "$dev1_what Start/Stop/Resume"
+      id: dev1_main_switch
+    auto_advance_switch: "$dev1_what Auto Advance"
+    valve_open_delay: 2s
+    valves:
+      - valve_switch: $dev1_zone1
+        enable_switch: Enable $dev1_zone1
+        run_duration_number:
+          id: "${devicename1}_1_duration"
+          name: "${dev1_zone1} Run Duration"
+          initial_value: 30
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename1}_1
+      - valve_switch: $dev1_zone2
+        enable_switch: Enable $dev1_zone2
+        run_duration_number:
+          id: "${devicename1}_2_duration"
+          name: "${dev1_zone2} Run Duration"
+          initial_value: 30
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename1}_2
+      - valve_switch: $dev1_zone3
+        enable_switch: Enable $dev1_zone3
+        run_duration_number:
+          id: "${devicename1}_3_duration"
+          name: "${dev1_zone3} Run Duration"
+          initial_value: 30
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename1}_3
+      - valve_switch: $dev1_zone4
+        enable_switch: Enable $dev1_zone4
+        run_duration_number:
+          id: "${devicename1}_4_duration"
+          name: "${dev1_zone4} Run Duration"
+          initial_value: 20
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename1}_4
+  - id: $devicename2
+    main_switch:
+      name: "$dev2_what Start/Stop/Resume"
+      id: dev2_main_switch
+    auto_advance_switch: "$dev2_what Auto Advance"
+    valve_open_delay: 2s
+    valves:
+      - valve_switch: $dev2_zone1
+        enable_switch: Enable $dev2_zone1
+        run_duration_number:
+          id: "${devicename2}_1_duration"
+          name: "${dev2_zone1} Run Duration"
+          initial_value: 25
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename2}_1
+      - valve_switch: $dev2_zone2
+        enable_switch: Enable $dev2_zone2
+        run_duration_number:
+          id: "${devicename2}_2_duration"
+          name: "${dev2_zone2} Run Duration"
+          initial_value: 40
+          unit_of_measurement: $uom
+          mode: slider
+          min_value: 1
+          max_value: 60
+          step: 1
+        valve_switch_id: ${devicename2}_2
+
+button:
+  - platform: template
+    id: dev1_sprinkler_pause
+    name: "$dev1_what Pause"
+    icon: "mdi:pause"
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: dev1_valve_status
+            state: "Paused"
+        - sprinkler.pause: $devicename1
+  - platform: template
+    id: dev2_sprinkler_pause
+    name: "$dev2_what Pause"
+    icon: "mdi:pause"
+    on_press:
+      then:
+        - text_sensor.template.publish:
+            id: dev2_valve_status
+            state: "Paused"
+        - sprinkler.pause: $devicename2
+ 
+####################################################
+# Switch Control to restart the irrigation system.   
+####################################################
+switch:
+  - platform: restart
+    name: "Restart $esphome_comment"
+####################################################
+# Hidden I/O  Switches to control irrigation valve relays
+####################################################
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename1}_1
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "$dev1_zone1 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "Idle"
+    pin: GPIO12
+    inverted: true
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename1}_2
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "$dev1_zone2 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "Idle"
+    pin: GPIO33
+    inverted: true
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename1}_3
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "$dev1_zone3 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "Idle"
+    pin: GPIO04
+    inverted: true
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename1}_4
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "$dev1_zone4 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev1_valve_status
+          state: "Idle"
+    pin: GPIO15
+    inverted: true
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename2}_1
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev2_valve_status
+          state: "$dev2_zone1 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev2_valve_status
+          state: "Idle"
+    pin: GPIO16
+    inverted: true
+  - platform: gpio
+    restore_mode: ALWAYS_OFF # Prevents GPIO pin from going high during boot
+    internal: true # Prevents GPIO switch NAME from showing up in Home Assistant
+    id: ${devicename2}_2
+    on_turn_on:
+      - text_sensor.template.publish:
+          id: dev2_valve_status
+          state: "$dev2_zone2 Active"
+    on_turn_off:
+      - text_sensor.template.publish:
+          id: dev2_valve_status
+          state: "Idle"
+    pin: GPIO32
+    inverted: true    
+
+
